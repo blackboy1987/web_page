@@ -172,8 +172,8 @@ export default defineConfig({
                 },
                 {
                   name: '卫生材料费审定',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index2',
+                  component: './check/index2',
                 },
                 {
                   name: '资产折旧费审定',

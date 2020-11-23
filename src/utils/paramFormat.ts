@@ -59,7 +59,7 @@ export const KeShiMingChen = {
             {
               "compCode":"100001",
               "acctYear":"2019",
-              "deptServiceType":"sc_dept_inv_cost_original"
+              "deptServiceType":"cbcs"
             }
           ],
           "delete":[
@@ -78,12 +78,12 @@ export const KeShiMingChen = {
     },
     "parameters":{
       "_boId":"bdDeptServiceImpl",
-      "_methodName":"findAllByCompYear1",
+      "_methodName":"findAllByCompYear",
       "_methodParameterTypes":"String,String,String",
       "_parameters":"compCode,acctYear,deptServiceType",
       "compCode":"100001",
       "acctYear":"2019",
-      "deptServiceType":"sc_dept_inv_cost_original"
+      "deptServiceType":"cbcs"
     }
   }
 }

@@ -7,6 +7,7 @@ export interface LoginModelType {
   effects: {
     danWei: Effect;
     keShiMingChen:Effect;
+    keShiLeiXin:Effect;
   };
 }
 
@@ -24,8 +25,17 @@ const Model: LoginModelType = {
     *keShiMingChen({ payload,callback }, { call }) {
       const response = yield call(keShiMingChen, payload);
       if(callback){
-        const result = response.body.dataStores.result.rowSet.primary;
+        const {result=[]} = response.body.dataStores.result.rowDatas[0];
         callback(result);
+      }
+    },
+    *keShiLeiXin({ payload,callback }, { call }) {
+      const response = yield call(keShiMingChen, payload);
+      if(callback){
+        const set = new Set();
+        const {result=[]} = response.body.dataStores.result.rowDatas[0];
+        result.forEach(item=>set.add(item.deptKind));
+        callback(set);
       }
     },
   },
