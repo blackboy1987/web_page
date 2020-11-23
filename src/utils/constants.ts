@@ -1,3 +1,3 @@
 export const Constants = {
-  tableHeiht:372
+  tableHeight:320,
 }
