@@ -139,6 +139,167 @@ export default defineConfig({
                   path: '/input/index9',
                   component: './input/index9',
                 },
+                {
+                  name: '医疗机构病房构成明细表',
+                  path: '/input/index10',
+                  component: './input/index10',
+                },
+                {
+                  name: '收入数据核对',
+                  path: '/input/index11',
+                  component: './input/index11',
+                },
+                {
+                  name: '收费项目对照',
+                  path: '/input/index12',
+                  component: './input/index12',
+                },
+                {
+                  name: '成本科室对照',
+                  path: '/input/index13',
+                  component: './input/index13',
+                },
+              ]
+            },
+            {
+              name: '核算平台',
+              path: '/check',
+              routes: [
+                {
+                  name: '收入审定',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '卫生材料费审定',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '资产折旧费审定',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '人员经费审核',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '无形资产审核',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '风险基金审核',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '其他费用审核',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '间接费用审核',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '全院药事服务费用',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '特殊项目(手工)',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '特殊项目(系统)',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '诊查费项目',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '外协项目',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '科室成本归集',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '科室项目成本',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '科室成本收入比',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '全院项目成本',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '医院标准项目结果',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '未匹配项目结果',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '床位费测算',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '科室收入成本核对',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '原始归集结果核对',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '全院总成本核对',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '解锁医院数据',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '有成本无收入',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '成本数据校验',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
+                {
+                  name: '编码名称校验',
+                  path: '/check/index1',
+                  component: './check/index1',
+                },
               ]
             },
             {

@@ -15,7 +15,7 @@ import styles from './style.less';
 
 interface TableListProps {
   dispatch: Dispatch;
-  index10: StateType;
+  index11: StateType;
   submitting: boolean;
 }
 
@@ -43,7 +43,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
   const list = (params: { [key: string]: any }) => {
     dispatch({
-      type: 'index10/list',
+      type: 'index11/list',
       payload: params,
       callback: (response: TableListData) => {
         console.log('response', response);
@@ -70,67 +70,37 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, index10) => <span>{index10 + 1}</span>,
+      render: (text, record, index11) => <span>{index11 + 1}</span>,
     },
     {
-      title: '病房等级',
-      dataIndex: 'wardLevel',
+      title: '年度',
+      dataIndex: 'acctYear',
       width: 60,
     },
     {
-      title: '病房规格（床/间）',
-      dataIndex: 'wardStand',
-      width: 120,
-    },
-    {
-      title: '收费标准（元/床.日）',
-      dataIndex: 'changeStand',
-      width: 140,
-    },
-    {
-      title: '病房面积（平方米/间）',
-      dataIndex: 'wardArea',
-      width: 140,
-    },
-    {
-      title: '病房数量（间）',
-      dataIndex: 'wardNum',
-      width: 120,
-    },
-    {
-      title: '床位数',
-      dataIndex: 'bedNum',
+      title: '类型',
+      dataIndex: 'type',
       width: 80,
     },
     {
-      title: '病房面积合计（平方米）',
-      dataIndex: 'wardAreaAll',
-      width: 160,
+      title: '报表金额',
+      dataIndex: 'reportMount',
+      width: 90,
     },
     {
-      title: '住院大楼名称',
-      dataIndex: 'buildName',
-      width: 120,
+      title: '录入金额 ',
+      dataIndex: 'lrMount',
+      width: 90,
     },
     {
-      title: '住院大楼竣工时间',
-      dataIndex: 'buildCompleteTime',
-      width: 120,
+      title: '差额',
+      dataIndex: 'balance',
+      width: 90,
     },
     {
-      title: '住院大楼总造价',
-      dataIndex: 'buildCost',
-      width: 120,
-    },
-    {
-      title: '住院大楼总建筑面积',
-      dataIndex: 'buildArea',
-      width: 120,
-    },
-    {
-      title: '备注',
-      dataIndex: 'remark',
-      width: 120,
+      title: '差额比例',
+      dataIndex: 'balanceRati0',
+      width: 90,
     },
   ];
 
@@ -205,7 +175,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>医疗机构病房构成明细表</span>
+              <span className={styles.title}>收入数据核对</span>
               <div>
                 <Button type="primary">导入</Button>
                 <Button type="primary">导出</Button>
@@ -213,10 +183,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
               </div>
             </div>
           )}
-          scroll={{
-            x: 1400,
-            y: height,
-          }}
           columns={columns}
           data={data}
           selectedRows={selectedRows}
@@ -230,17 +196,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    index10,
+    index11,
     loading,
   }: {
-    index10: StateType;
+    index11: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    index10,
-    submitting: loading.effects['index10/list'],
+    index11,
+    submitting: loading.effects['index11/list'],
   }),
 )(TableList);

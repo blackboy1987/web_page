@@ -28,6 +28,66 @@ export const DanWeiParams = {
   }
 }
 
+
+export const KeShiLaiYuanParams = {
+  header:{
+    code:0,
+    message:{
+      title:"",
+      detail:""
+    }
+  },
+  body:{
+    dataStores:{},
+    parameters:{_boId:"bdHospitalServiceImpl",_methodName:"findALl"}
+  }
+}
+
+export const KeShiMingChen = {
+  "header":{
+    "code":0,
+    "message":{
+      "title":"",
+      "detail":""
+    }
+  },
+  "body":{
+    "dataStores":{
+      "items":{
+        "rowSet":{
+          "primary":[
+            {
+              "compCode":"100001",
+              "acctYear":"2019",
+              "deptServiceType":"sc_dept_inv_cost_original"
+            }
+          ],
+          "delete":[
+
+          ],
+          "filter":[
+
+          ]
+        },
+        "name":"items",
+        "pageNumber":1,
+        "pageSize":2147483647,
+        "recordCount":1,
+        "rowSetName":"com.viewhigh.excel.domain.entity.BdDept"
+      }
+    },
+    "parameters":{
+      "_boId":"bdDeptServiceImpl",
+      "_methodName":"findAllByCompYear1",
+      "_methodParameterTypes":"String,String,String",
+      "_parameters":"compCode,acctYear,deptServiceType",
+      "compCode":"100001",
+      "acctYear":"2019",
+      "deptServiceType":"sc_dept_inv_cost_original"
+    }
+  }
+}
+
 const defaultParam:ParamFormat = {
   header:{
     code:0,

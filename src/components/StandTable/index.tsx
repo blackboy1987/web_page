@@ -85,7 +85,7 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
     return (
       <div className={styles.standardTable}>
         <Table
-          rowKey={rowKey || 'id'}
+          rowKey={rowKey || 'dataId'}
           rowSelection={rowSelection}
           dataSource={list}
           pagination={paginationProps}
