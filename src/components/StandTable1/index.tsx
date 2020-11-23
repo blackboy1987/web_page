@@ -48,6 +48,8 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
     const { list = [], pagination = false } = data || {};
     const paginationProps = pagination
       ? {
+          hideOnSinglePage:true,
+          showLessItems:false,
           showSizeChanger: true,
           showQuickJumper: true,
           ...pagination,
@@ -57,6 +59,7 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
     return (
       <div className={styles.standardTable}>
         <Table
+
           rowKey={rowKey || 'id'}
           dataSource={list}
           pagination={paginationProps}
