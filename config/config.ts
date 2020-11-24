@@ -76,7 +76,7 @@ export default defineConfig({
               path: '/dashboard',
               name: 'dashboard',
               icon: 'dashboard',
-              hideInMenu:true,
+              hideInMenu: true,
               routes: [
                 {
                   path: '/',
@@ -139,7 +139,12 @@ export default defineConfig({
                   path: '/input/index9',
                   component: './input/index9',
                 },
-              ]
+                {
+                  name: '医疗机构病房构成明细表',
+                  path: '/input/index10',
+                  component: './input/index10',
+                },
+              ],
             },
             {
               component: '404',
