@@ -1,9 +1,13 @@
 import { Effect } from 'umi';
 import { danWei, keShi, keShiMingChen } from '@/services/common';
 
-export interface LoginModelType {
+export interface StateType {
+
+}
+
+export interface CommonModelType {
   namespace: string;
-  state :{},
+  state :StateType,
   effects: {
     danWei: Effect;
     keShiMingChen:Effect;
@@ -12,7 +16,7 @@ export interface LoginModelType {
   };
 }
 
-const Model: LoginModelType = {
+const Model: CommonModelType = {
   namespace: 'common',
   state:{},
   effects: {
