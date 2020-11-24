@@ -232,8 +232,8 @@ export default defineConfig({
                 },
                 {
                   name: '科室成本归集',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index13',
+                  component: './check/index13',
                 },
                 {
                   name: '科室项目成本',

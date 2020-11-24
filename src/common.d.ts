@@ -48,6 +48,7 @@ export interface TableListParams {
   acctYear?:string;
   deptCode?:string;
   deptKind?:string;
+  deptName?:string;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
 }

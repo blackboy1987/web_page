@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import {Form, Select, Button, Card, DatePicker} from 'antd';
+import { Form, Select, Button, Card, DatePicker, message, Modal } from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
 import { ColumnProps } from 'antd/es/table';
 import { Key, SorterResult, TablePaginationConfig } from 'antd/lib/table/interface';
-import { commonHandleTableChange, formatFormParams } from '@/utils/common';
+import { commonHandleTableChange, downloadFile, formatFormParams } from '@/utils/common';
 import moment from 'moment';
 import StandardTable from '@/components/StandTable1';
 import { TableListData, TableListItem } from './data.d';
@@ -15,7 +15,7 @@ import styles from './style.less';
 
 interface TableListProps {
   dispatch: Dispatch;
-  checkIndex2: StateType;
+  checkIndex13: StateType;
   submitting: boolean;
 }
 
@@ -25,8 +25,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
   const [height, setHeight] = useState<number>(window.innerHeight - Constants.tableHeight);
   const [selectedRows, setSelectRows] = useState<TableListItem[]>([]);
   const [danWeis, setDanWeis] = useState<{ compCode: string }[]>([]);
-  const [keShiMingChens, setKeShiMingChen] = useState<any[]>([]);
-  const [keShiLeiXins, setKeShiLeiXins] = useState<any[]>([]);
+  const [keShis, setKeShis] = useState<any[]>([]);
 
   const [form] = Form.useForm();
   const [data, setData] = useState<TableListData>({
@@ -43,10 +42,9 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
   const list = (params: { [key: string]: any }) => {
     dispatch({
-      type: 'checkIndex2/list',
+      type: 'checkIndex13/list',
       payload: params,
       callback: (response: TableListData) => {
-        console.log('response', response);
         setData(response);
       },
     });
@@ -59,28 +57,41 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       },
     });
   };
-  const keShiMingChen = () => {
+  const keShi = () => {
     dispatch({
-      type: 'common/keShiMingChen',
+      type: 'common/keShi',
       callback: (response: { compCode: string }[]) => {
-        setKeShiMingChen(response);
-      },
-    });
-  };
-  const keShiLeiXin = () => {
-    dispatch({
-      type: 'common/keShiLeiXin',
-      callback: (response: { compCode: string }[]) => {
-        setKeShiLeiXins(response);
+        setKeShis(response);
       },
     });
   };
   useEffect(() => {
     list({ ...formatFormParams(form.getFieldsValue()) });
     danWei();
-    keShiMingChen()
-    keShiLeiXin();
+    keShi()
   }, []);
+
+  const calc = () => {
+    Modal.confirm({
+      title:'提示',
+      content:'确定计算',
+      onOk:()=>{
+        dispatch({
+          type: 'checkIndex13/calc',
+          payload: { ...formatFormParams(form.getFieldsValue()) },
+          callback: (response: {code:number,msg:string}) => {
+            const {code,msg} = response;
+            if(code===1){
+              message.success(msg);
+            }else{
+              message.error(msg);
+            }
+            list({...formatFormParams(form.getFieldsValue())});
+          },
+        });
+      }
+    })
+  };
 
   const columns: ColumnProps<TableListItem>[] = [
     {
@@ -88,7 +99,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, checkIndex2) => <span>{checkIndex2 + 1}</span>,
+      render: (text, record, checkIndex13) => <span>{checkIndex13 + 1}</span>,
     },
     {
       title: '年度',
@@ -96,58 +107,58 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       width: 100,
     },
     {
-      title: '成本科室编码',
-      dataIndex: 'deptCode',
-      width: 120,
-    },
-    {
-      title: '成本科室名称',
+      title: '合并科室名称',
       dataIndex: 'deptName',
       width: 120,
     },
     {
-      title: '全成本报表金额',
-      dataIndex: 'reportAmount',
+      title: '医护标识',
+      dataIndex: 'personType',
       width: 120,
     },
     {
-      title: '卫生材料领用清单金额',
-      dataIndex: 'detailAmount',
+      title: '人员经费',
+      dataIndex: 'wageCount',
+      width: 120,
+    },
+    {
+      title: '卫生材料(公摊)',
+      dataIndex: 'mateCount',
       width: 80,
     },
     {
-      title: '差额',
-      dataIndex: 'balance',
+      title: '固定资产折旧(公摊)',
+      dataIndex: 'equiCount',
       width: 80,
     },
     {
-      title: '审核是否通过 ',
-      dataIndex: 'isCheck',
+      title: '无形资产 ',
+      dataIndex: 'assetsCount',
       width: 80,
     },
     {
-      title: '不可收费材料金额',
-      dataIndex: 'noChargeAmount',
+      title: '提取风险基金',
+      dataIndex: 'riskCount',
       width: 80,
     },
     {
-      title: '可收费材料金额 ',
-      dataIndex: 'yesChargeAmount',
+      title: '其他费用 ',
+      dataIndex: 'otherCount',
       width: 80,
     },
     {
-      title: '核减数',
+      title: '医辅费用',
       dataIndex: 'reduceAmount',
       width: 80,
     },
     {
-      title: '核定数',
-      dataIndex: 'confirmAmount',
+      title: '管理费用',
+      dataIndex: 'medicalassistCount',
       width: 80,
     },
     {
-      title: '差额比例',
-      dataIndex: 'balanceRatio',
+      title: '剔除成本（躺椅等)',
+      dataIndex: 'reduceAmount',
       width: 80,
     },
   ];
@@ -170,6 +181,23 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     setSelectRows(rows);
   };
 
+  const download = () => {
+    dispatch({
+      type: 'checkIndex13/download',
+      payload: { ...formatFormParams(form.getFieldsValue()) },
+      callback: (response: {status:number,msg:string}) => {
+        const {status,msg} = response;
+        if(status===1){
+          message.success('文件正在下载...');
+          downloadFile(msg,msg);
+        }else{
+          message.error('文件下载失败');
+        }
+        console.log(status,msg);
+      },
+    });
+  };
+
   return (
     <PageContainer title={false}>
       <div className={styles.search}>
@@ -180,9 +208,8 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             onFinish={onFinish}
             initialValues={{
               compCode: '100001',
-              addYear: moment('2019'),
-              deptCode:'',
-              deptKind:''
+              acctYear: moment('2019'),
+              deptName:'',
             }}
           >
             <Form.Item label="单位" name="compCode">
@@ -192,31 +219,21 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item label="年度" name="addYear">
+            <Form.Item label="年度" name="acctYear">
               <DatePicker format="YYYY" picker="year" />
             </Form.Item>
-            <Form.Item label="成本科室名称" name="deptCode">
+            <Form.Item label="科室" name="deptName">
               <Select style={{ width: 160 }}>
                 <Select.Option value=''>全部</Select.Option>
-                {keShiMingChens.map((item,index) => (
-                  <Select.Option key={index} value={`${item.compCode}`}>{item.deptName}</Select.Option>
+                {keShis.map((item,index) => (
+                  <Select.Option key={index} value={`${item.code}`}>{item.name}</Select.Option>
                 ))}
-              </Select>
-            </Form.Item>
-            <Form.Item label="成本科室类型" name="deptKind">
-              <Select style={{ width: 100 }}>
-                <Select.Option value=''>全部</Select.Option>
-                {keShiLeiXins.map((item,index) => (
-                  <Select.Option value={`${item}`} key={index}>{item}</Select.Option>
-                ))}
-                <Select.Option value='其他'>其他</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item>
               <div className={styles.btns}>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button type="primary" onClick={calc}>计算</Button>
               </div>
             </Form.Item>
           </Form>
@@ -229,11 +246,9 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>卫生材料费审定</span>
+              <span className={styles.title}>科室成本归集</span>
               <div>
-                <Button type="primary">导入</Button>
-                <Button type="primary">导出</Button>
-                <Button type="primary">模版下载</Button>
+                <Button type="primary" onClick={download}>导出</Button>
               </div>
             </div>
           )}
@@ -254,17 +269,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    checkIndex2,
+    checkIndex13,
     loading,
   }: {
-    checkIndex2: StateType;
+    checkIndex13: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    checkIndex2,
-    submitting: loading.effects['checkIndex2/list'],
+    checkIndex13,
+    submitting: loading.effects['checkIndex13/list']||loading.effects['checkIndex13/calc'],
   }),
 )(TableList);

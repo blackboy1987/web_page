@@ -167,7 +167,7 @@ export interface ApiResponse {
   },
   body:{
     parameters:{
-
+      result?:string,
     },
     dataStores:{
       result:{
@@ -209,6 +209,8 @@ export interface ApiResponse {
         "rowSetName":string,
         rowDatas:[
           {
+            status?:number;
+            message?:string;
             result:any[],
             recordCount:number,
             pageSize:number,

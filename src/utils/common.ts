@@ -1,4 +1,6 @@
 import {ApiResponse} from "@/utils/paramFormat";
+import { Key, SorterResult, TablePaginationConfig } from 'antd/lib/table/interface';
+import { TableListItem } from '@/pages/check/index2/data';
 
 export const parseRequestParams = (params:{[key:string]:any}) =>{
   let values:{[key:string]:any} = {
@@ -54,4 +56,41 @@ export const formatFormParams = (params:{[key:string]:any }) =>{
     }
   }
   return params;
+}
+
+const getValue = (obj: any) =>
+  Object.keys(obj)
+    .map((key) => obj[key])
+    .join(',');
+
+export const commonHandleTableChange = (
+  pagination: TablePaginationConfig,
+  filtersArg: Record<string, Key[] | null>,
+  sorter: SorterResult<TableListItem>,
+  formValues:{[key:string]:any},
+  callback:(params:{[key:string]:any})=>void
+) => {
+  const filters = Object.keys(filtersArg).reduce((obj, key) => {
+    const newObj = { ...obj };
+    newObj[key] = getValue(filtersArg[key]);
+    return newObj;
+  }, {});
+
+  const params: { [key: string]: any } = {
+    currentPage: pagination.current,
+    pageSize: pagination.pageSize,
+    ...formatFormParams(formValues),
+    ...filters,
+  };
+  if (sorter.field) {
+    params.sorter = `${sorter.field}_${sorter.order}`;
+  }
+  callback(params);
+};
+
+export const downloadFile=(url:string,fileName:string)=>{
+  const ele = document.createElement('a');
+  ele.setAttribute('href',`http://120.25.198.191:8080/api/common/downLoad.jsp?fname=${url}`);
+  ele.setAttribute('download' , fileName);
+  ele.click();
 }
