@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import {Form, Select, Button, Card, DatePicker} from 'antd';
+import {Form, Button, Card} from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
 import { ColumnProps } from 'antd/es/table';
 import { Key, SorterResult, TablePaginationConfig } from 'antd/lib/table/interface';
-import { commonHandleTableChange, formatFormParams } from '@/utils/common';
-import moment from 'moment';
+import { commonHandleTableChange } from '@/utils/common';
 import StandardTable from '@/components/StandTable1';
 import { TableListData, TableListItem } from './data.d';
 // @ts-ignore
 import styles from './style.less';
+import SearchBar from "@/components/SearchBar";
+import moment from "moment";
 
 interface TableListProps {
   dispatch: Dispatch;
@@ -24,9 +25,6 @@ interface TableListProps {
 const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
   const [height, setHeight] = useState<number>(window.innerHeight - Constants.tableHeight);
   const [selectedRows, setSelectRows] = useState<TableListItem[]>([]);
-  const [danWeis, setDanWeis] = useState<{ compCode: string }[]>([]);
-  const [keShiMingChens, setKeShiMingChen] = useState<any[]>([]);
-  const [keShiLeiXins, setKeShiLeiXins] = useState<any[]>([]);
 
   const [form] = Form.useForm();
   const [data, setData] = useState<TableListData>({
@@ -51,36 +49,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       },
     });
   };
-  const danWei = () => {
-    dispatch({
-      type: 'common/danWei',
-      callback: (response: { compCode: string }[]) => {
-        setDanWeis(response);
-      },
-    });
-  };
-  const keShiMingChen = () => {
-    dispatch({
-      type: 'common/keShiMingChen',
-      callback: (response: { compCode: string }[]) => {
-        setKeShiMingChen(response);
-      },
-    });
-  };
-  const keShiLeiXin = () => {
-    dispatch({
-      type: 'common/keShiLeiXin',
-      callback: (response: { compCode: string }[]) => {
-        setKeShiLeiXins(response);
-      },
-    });
-  };
-  useEffect(() => {
-    list({ ...formatFormParams(form.getFieldsValue()) });
-    danWei();
-    keShiMingChen()
-    keShiLeiXin();
-  }, []);
 
   const columns: ColumnProps<TableListItem>[] = [
     {
@@ -152,10 +120,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     },
   ];
 
-  const onFinish = (values: { [key: string]: any }) => {
-    list(formatFormParams(values));
-  };
-
   const handleTableChange = (
     pagination: TablePaginationConfig,
     filtersArg: Record<string, Key[] | null>,
@@ -174,52 +138,16 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     <PageContainer title={false}>
       <div className={styles.search}>
         <Card bordered={false} size="small" className={styles.searchBar}>
-          <Form
-            form={form}
-            layout="inline"
-            onFinish={onFinish}
+          <SearchBar
             initialValues={{
               compCode: '100001',
               addYear: moment('2019'),
               deptCode:'',
-              deptKind:''
+              deptKind:'',
             }}
-          >
-            <Form.Item label="单位" name="compCode">
-              <Select style={{ width: 100 }}>
-                {danWeis.map((item,index) => (
-                  <Select.Option key={index} value={`${item.compCode}`}>{item.compCode}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item label="年度" name="addYear">
-              <DatePicker format="YYYY" picker="year" />
-            </Form.Item>
-            <Form.Item label="成本科室名称" name="deptCode">
-              <Select style={{ width: 160 }}>
-                <Select.Option value=''>全部</Select.Option>
-                {keShiMingChens.map((item,index) => (
-                  <Select.Option key={index} value={`${item.compCode}`}>{item.deptName}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item label="成本科室类型" name="deptKind">
-              <Select style={{ width: 100 }}>
-                <Select.Option value=''>全部</Select.Option>
-                {keShiLeiXins.map((item,index) => (
-                  <Select.Option value={`${item}`} key={index}>{item}</Select.Option>
-                ))}
-                <Select.Option value='其他'>其他</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item>
-              <div className={styles.btns}>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
+            searchKeys={['compCode','addYear','deptCode','deptKind']}
+            onSearch={(params:{[key:string]:any}) => list(params)}
+          />
         </Card>
       </div>
       <Card size="small" bordered={false} bodyStyle={{ padding: 16 }}>

@@ -12,6 +12,7 @@ import { TableListData, TableListItem } from './data.d';
 // @ts-ignore
 import styles from './style.less';
 import SearchBar from "@/components/SearchBar";
+import moment from "moment";
 
 interface TableListProps {
   dispatch: Dispatch;
@@ -112,7 +113,14 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     <PageContainer title={false}>
       <div className={styles.search}>
         <Card bordered={false} size="small" className={styles.searchBar}>
-          <SearchBar onSearch={(params:{[key:string]:any})=>list(params)} />
+          <SearchBar
+            initialValues={{
+              compCode: '100001',
+              addYear: moment('2019'),
+            }}
+            searchKeys={['compCode','addYear']}
+            onSearch={(params:{[key:string]:any}) => list(params)}
+          />
         </Card>
       </div>
       <Card size="small" bordered={false} bodyStyle={{ padding: 16 }}>
