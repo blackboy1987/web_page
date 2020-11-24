@@ -23,13 +23,3 @@ export interface TableListData {
   list: TableListItem[];
   pagination: Partial<TableListPagination>;
 }
-
-export interface TableListParams {
-  _pageSize?: number;
-  pageSize?: number;
-  _pageNumber?: number;
-  pageNumber?: number;
-  currentPage?: number;
-  filter?: { [key: string]: any[] };
-  sorter?: { [key: string]: any };
-}

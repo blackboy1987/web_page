@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import {Form, Select, Button, Card, DatePicker, Input} from 'antd';
+import {Form, Select, Button, Card, DatePicker} from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
@@ -15,7 +15,7 @@ import styles from './style.less';
 
 interface TableListProps {
   dispatch: Dispatch;
-  checkIndex2: StateType;
+  checkIndex6: StateType;
   submitting: boolean;
 }
 
@@ -29,7 +29,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
   const [selectedRows, setSelectRows] = useState<TableListItem[]>([]);
   const [danWeis, setDanWeis] = useState<{ compCode: string }[]>([]);
   const [keShiMingChens, setKeShiMingChen] = useState<any[]>([]);
-  const [keShiLeiXins, setKeShiLeiXins] = useState<any[]>([]);
 
   const [form] = Form.useForm();
   const [data, setData] = useState<TableListData>({
@@ -46,7 +45,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
   const list = (params: { [key: string]: any }) => {
     dispatch({
-      type: 'checkIndex2/list',
+      type: 'checkIndex6/list',
       payload: params,
       callback: (response: TableListData) => {
         console.log('response', response);
@@ -70,19 +69,10 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       },
     });
   };
-  const keShiLeiXin = () => {
-    dispatch({
-      type: 'common/keShiLeiXin',
-      callback: (response: { compCode: string }[]) => {
-        setKeShiLeiXins(response);
-      },
-    });
-  };
   useEffect(() => {
     list({ ...formatFormParams(form.getFieldsValue()) });
     danWei();
     keShiMingChen()
-    keShiLeiXin();
   }, []);
 
   const columns: ColumnProps<TableListItem>[] = [
@@ -91,7 +81,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, checkIndex2) => <span>{checkIndex2 + 1}</span>,
+      render: (text, record, checkIndex6) => <span>{checkIndex6 + 1}</span>,
     },
     {
       title: '年度',
@@ -114,43 +104,18 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       width: 120,
     },
     {
-      title: '卫生材料领用清单金额',
-      dataIndex: 'detailAmount',
+      title: '列入非床位费金额',
+      dataIndex: 'nobedAmount',
       width: 80,
     },
     {
-      title: '差额',
-      dataIndex: 'balance',
+      title: '列入床位费金额',
+      dataIndex: 'bedAmount',
       width: 80,
     },
     {
-      title: '审核是否通过 ',
-      dataIndex: 'isCheck',
-      width: 80,
-    },
-    {
-      title: '不可收费材料金额',
-      dataIndex: 'noChargeAmount',
-      width: 80,
-    },
-    {
-      title: '可收费材料金额 ',
-      dataIndex: 'yesChargeAmount',
-      width: 80,
-    },
-    {
-      title: '核减数',
+      title: '核减金额',
       dataIndex: 'reduceAmount',
-      width: 80,
-    },
-    {
-      title: '核定数',
-      dataIndex: 'confirmAmount',
-      width: 80,
-    },
-    {
-      title: '差额比例',
-      dataIndex: 'balanceRatio',
       width: 80,
     },
   ];
@@ -198,7 +163,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
               compCode: '100001',
               addYear: moment('2019'),
               deptCode:'',
-              deptKind:''
             }}
           >
             <Form.Item label="单位" name="compCode">
@@ -219,15 +183,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item label="成本科室类型" name="deptKind">
-              <Select style={{ width: 100 }}>
-                <Select.Option value=''>全部</Select.Option>
-                {keShiLeiXins.map((item,index) => (
-                  <Select.Option value={`${item}`} key={index}>{item}</Select.Option>
-                ))}
-                <Select.Option value='其他'>其他</Select.Option>
-              </Select>
-            </Form.Item>
             <Form.Item>
               <div className={styles.btns}>
                 <Button type="primary" htmlType="submit">
@@ -245,7 +200,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>卫生材料费审定</span>
+              <span className={styles.title}>风险基金审核</span>
               <div>
                 <Button type="primary">导入</Button>
                 <Button type="primary">导出</Button>
@@ -270,17 +225,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    checkIndex2,
+    checkIndex6,
     loading,
   }: {
-    checkIndex2: StateType;
+    checkIndex6: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    checkIndex2,
-    submitting: loading.effects['checkIndex2/list'],
+    checkIndex6,
+    submitting: loading.effects['checkIndex6/list'],
   }),
 )(TableList);

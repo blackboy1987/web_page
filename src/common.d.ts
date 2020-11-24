@@ -7,3 +7,47 @@ export const header={
 };
 
 export const dataStores={};
+
+export interface ParamFormat {
+  header:{
+    code:number;
+    message:{
+      title:string,
+      detail:string
+    }
+  },
+  body:{
+    dataStores:{
+    },
+    parameters:{
+      _boId:string,
+      _methodName:string,
+      _methodParameterTypes:string,
+      _parameters:string,
+      compCode?:string,
+      acctYear?:string,
+      invCode?:string,
+      deptCode?:string,
+      isCharg?:string,
+      _pageNumber:number,
+      _pageSize:number,
+      _calc:boolean
+    }
+  }
+}
+
+export interface TableListParams {
+  status?: string;
+  name?: string;
+  desc?: string;
+  key?: number;
+  pageSize?: number;
+  pageNumber?:number;
+  currentPage?: number;
+  compCode?:string;
+  acctYear?:string;
+  deptCode?:string;
+  deptKind?:string;
+  filter?: { [key: string]: any[] };
+  sorter?: { [key: string]: any };
+}

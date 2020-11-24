@@ -1,31 +1,4 @@
-export interface ParamFormat {
-  header:{
-    code:number;
-    message:{
-      title:string,
-      detail:string
-    }
-  },
-  body:{
-    dataStores:{
-    },
-    parameters:{
-      _boId:string,
-      _methodName:string,
-      _methodParameterTypes:string,
-      _parameters:string,
-      compCode:string,
-      acctYear:string,
-      invCode:string,
-      deptCode:string,
-      isCharg:string,
-      _pageNumber:number,
-      _pageSize:number,
-      _calc:boolean
-    }
-  }
-}
-
+import { ParamFormat } from '@/common';
 
 export const DanWeiParams = {
   header:{

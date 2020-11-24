@@ -1,8 +1,8 @@
 import request from '@/utils/request';
-import { TableListParams } from '@/common';
+import { TableListParams } from '@/common.d.ts';
 
 
-export async function list(params:TableListParams) {
+export async function list(params: TableListParams) {
   return request('http://120.25.198.191:8080/api/commonProcessor/commonMethod', {
     method: 'POST',
     data: {
@@ -20,9 +20,7 @@ export async function list(params:TableListParams) {
               "primary":[
                 {
                   "compCode":params.compCode,
-                  "addYear":params.addYear,
-                  "deptCode":params.deptCode,
-                  "deptKind":params.deptKind,
+                  "acctYear":params.acctYear,
                   "deptServiceType":"cbcs"
                 }
               ],
@@ -41,10 +39,12 @@ export async function list(params:TableListParams) {
           }
         },
         "parameters":{
-          "_boId":"healthMaterialValidationServiceImpl",
-          "_methodName":"findByParam",
-          "_methodParameterTypes":"com.viewhigh.excel.domain.entity.BdDept",
-          "_parameters":"items",
+          "_boId":"depreValidationServiceImpl",
+          "_methodName":"findAirBed",
+          "_methodParameterTypes":"String,String",
+          "_parameters":"compCode,acctYear",
+          "compCode":params.compCode,
+          "acctYear":params.acctYear,
           "_pageNumber":params.pageNumber,
           "_pageSize":params.pageSize,
           "_calc":true

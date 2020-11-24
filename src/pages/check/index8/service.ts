@@ -65,11 +65,12 @@ export async function list(params: TableListParams) {
       body:{
         dataStores:{},
         parameters:{
-          "_boId":"depreValidationServiceImpl",
-          "_methodName":"findImassets",
+          "_boId":"indrValidationSericeImp",
+          "_methodName":"findMates",
           "_methodParameterTypes":methodParameterTypes.join(','),
           "_parameters":parameters.join(','),
           ...params,
+          deptServiceType:'cbcs',
           "_calc":true
         }
       },

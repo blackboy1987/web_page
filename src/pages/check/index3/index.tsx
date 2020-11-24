@@ -115,15 +115,13 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     },
     {
       title: '固定资产清单折旧额',
-      dataIndex: 'addYear',
+      dataIndex: 'detailAmount',
       width: 80,
-      render:()=><span>无</span>
     },
     {
       title: '差额',
-      dataIndex: 'isCheck',
+      dataIndex: 'balance',
       width: 80,
-      render:()=><span>无</span>
     },
     {
       title: '是否通过',
@@ -142,20 +140,18 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     },
     {
       title: '核减数',
-      dataIndex: 'isCheck',
+      dataIndex: 'reduceAmount',
       width: 80,
-      render:()=><span>无</span>
     },
     {
       title: '核定数',
-      dataIndex: 'isCheck',
+      dataIndex: 'confirmAmount',
       width: 80,
     },
     {
       title: '差额比例',
-      dataIndex: 'isCheck',
+      dataIndex: 'balanceRatio',
       width: 80,
-      render:()=><span>无</span>
     },
   ];
 

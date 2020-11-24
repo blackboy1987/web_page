@@ -63,13 +63,37 @@ export async function list(params: TableListParams) {
     data: {
       ...defaultQueryRuleParams,
       body:{
-        dataStores:{},
+        dataStores:{
+          "items":{
+            "rowSet":{
+              "primary":[
+                {
+                  "compCode":params.compCode,
+                  "addYear":params.addYear,
+                  "deptCode":params.deptCode,
+                }
+              ],
+              "delete":[
+
+              ],
+              "filter":[
+
+              ]
+            },
+            "name":"items",
+            "pageNumber":1,
+            "pageSize":2147483647,
+            "recordCount":1,
+            "rowSetName":"com.viewhigh.excel.domain.entity.BdDept"
+          }
+        },
         parameters:{
-          "_boId":"depreValidationServiceImpl",
-          "_methodName":"findImassets",
-          "_methodParameterTypes":methodParameterTypes.join(','),
-          "_parameters":parameters.join(','),
-          ...params,
+          "_boId":"otherChargesValidationServiceImpl",
+          "_methodName":"findByParam",
+          "_methodParameterTypes":"com.viewhigh.excel.domain.entity.BdDept",
+          "_parameters":"items",
+          "_pageNumber":params._pageNumber,
+          "_pageSize":params._pageSize,
           "_calc":true
         }
       },

@@ -200,7 +200,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>资产折旧费审定</span>
+              <span className={styles.title}>无形资产审定</span>
               <div>
                 <Button type="primary">导入</Button>
                 <Button type="primary">导出</Button>

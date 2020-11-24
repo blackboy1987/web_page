@@ -191,29 +191,29 @@ export default defineConfig({
                   component: './check/index5',
                 },
                 {
-                  name: '风险基金审核',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  name: '风险基金审核(未)',
+                  path: '/check/index6',
+                  component: './check/index6',
                 },
                 {
                   name: '其他费用审核',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index7',
+                  component: './check/index7',
                 },
                 {
                   name: '间接费用审核',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index8',
+                  component: './check/index8',
                 },
                 {
                   name: '全院药事服务费用',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index9',
+                  component: './check/index9',
                 },
                 {
                   name: '特殊项目(手工)',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index10',
+                  component: './check/index10',
                 },
                 {
                   name: '特殊项目(系统)',
@@ -222,13 +222,13 @@ export default defineConfig({
                 },
                 {
                   name: '诊查费项目',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index11',
+                  component: './check/index11',
                 },
                 {
                   name: '外协项目',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index12',
+                  component: './check/index12',
                 },
                 {
                   name: '科室成本归集',
