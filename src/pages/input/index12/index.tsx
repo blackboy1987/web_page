@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Form, Select, Button, Card, DatePicker } from 'antd';
+import {Form, Select, Button, Card, DatePicker, Input} from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
@@ -15,7 +15,7 @@ import styles from './style.less';
 
 interface TableListProps {
   dispatch: Dispatch;
-  index10: StateType;
+  index12: StateType;
   submitting: boolean;
 }
 
@@ -43,7 +43,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
   const list = (params: { [key: string]: any }) => {
     dispatch({
-      type: 'index10/list',
+      type: 'index12/list',
       payload: params,
       callback: (response: TableListData) => {
         console.log('response', response);
@@ -70,66 +70,47 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, index10) => <span>{index10 + 1}</span>,
+      render: (text, record, index12) => <span>{index12 + 1}</span>,
     },
     {
-      title: '病房等级',
-      dataIndex: 'wardLevel',
-      width: 60,
+      title: '收费项目编码',
+      dataIndex: 'chargeCode',
+      width: 100,
     },
     {
-      title: '病房规格（床/间）',
-      dataIndex: 'wardStand',
-      width: 120,
+      title: '收费项目名称',
+      dataIndex: 'chargeName',
+      width: 180,
     },
     {
-      title: '收费标准（元/床.日）',
-      dataIndex: 'changeStand',
-      width: 140,
+      title: '单价',
+      dataIndex: 'unitPrice',
+      width: 50,
     },
     {
-      title: '病房面积（平方米/间）',
-      dataIndex: 'wardArea',
-      width: 140,
-    },
-    {
-      title: '病房数量（间）',
-      dataIndex: 'wardNum',
-      width: 120,
-    },
-    {
-      title: '床位数',
-      dataIndex: 'bedNum',
+      title: '是否核算',
+      dataIndex: '"isCheck"',
       width: 80,
     },
     {
-      title: '病房面积合计（平方米）',
-      dataIndex: 'wardAreaAll',
-      width: 160,
-    },
-    {
-      title: '住院大楼名称',
-      dataIndex: 'buildName',
+      title: '标准项目编码',
+      dataIndex: 'standardCode',
       width: 120,
     },
     {
-      title: '住院大楼竣工时间',
-      dataIndex: 'buildCompleteTime',
+      title: '标准项目名称',
+      dataIndex: 'standardName',
       width: 120,
     },
     {
-      title: '住院大楼总造价',
-      dataIndex: 'buildCost',
+      title: '标准项目单价',
+      dataIndex: 'standardUnitPrice',
+      sorter: true,
       width: 120,
     },
     {
-      title: '住院大楼总建筑面积',
-      dataIndex: 'buildArea',
-      width: 120,
-    },
-    {
-      title: '备注',
-      dataIndex: 'remark',
+      title: '创建年度',
+      dataIndex: 'createYear',
       width: 120,
     },
   ];
@@ -174,8 +155,11 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             layout="inline"
             onFinish={onFinish}
             initialValues={{
+              isCheck: '',
               compCode: '100001',
               acctYear: moment('2019'),
+              iscontrast: '',
+              chargeName:'',
             }}
           >
             <Form.Item label="单位" name="compCode">
@@ -187,6 +171,23 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             </Form.Item>
             <Form.Item label="年度" name="acctYear">
               <DatePicker format="YYYY" picker="year" />
+            </Form.Item>
+            <Form.Item label="收费项目" name="chargeName">
+              <Input />
+            </Form.Item>
+            <Form.Item label="是否核算" name="isCheck">
+              <Select style={{ width: 100 }}>
+                <Select.Option value="">全部</Select.Option>
+                <Select.Option value="1">是</Select.Option>
+                <Select.Option value="0">否</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="是否对应" name="iscontrast">
+              <Select style={{ width: 100 }}>
+                <Select.Option value="">全部</Select.Option>
+                <Select.Option value="1">是</Select.Option>
+                <Select.Option value="0">否</Select.Option>
+              </Select>
             </Form.Item>
             <Form.Item>
               <div className={styles.btns}>
@@ -205,7 +206,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>医疗机构病房构成明细表</span>
+              <span className={styles.title}>收费项目对照</span>
               <div>
                 <Button type="primary">导入</Button>
                 <Button type="primary">导出</Button>
@@ -214,7 +215,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             </div>
           )}
           scroll={{
-            x: 1400,
+            x: 1200,
             y: height,
           }}
           columns={columns}
@@ -230,17 +231,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    index10,
+    index12,
     loading,
   }: {
-    index10: StateType;
+    index12: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    index10,
-    submitting: loading.effects['index10/list'],
+    index12,
+    submitting: loading.effects['index12/list'],
   }),
 )(TableList);

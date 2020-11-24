@@ -9,7 +9,20 @@ export interface ParamFormat {
   body:{
     dataStores:{
     },
-    parameters:{[key:string]:any}
+    parameters:{
+      _boId:string,
+      _methodName:string,
+      _methodParameterTypes:string,
+      _parameters:string,
+      compCode:string,
+      acctYear:string,
+      invCode:string,
+      deptCode:string,
+      isCharg:string,
+      _pageNumber:number,
+      _pageSize:number,
+      _calc:boolean
+    }
   }
 }
 
@@ -25,6 +38,66 @@ export const DanWeiParams = {
   body:{
     dataStores:{},
     parameters:{_boId:"bdHospitalServiceImpl",_methodName:"findALl"}
+  }
+}
+
+
+export const KeShiLaiYuanParams = {
+  header:{
+    code:0,
+    message:{
+      title:"",
+      detail:""
+    }
+  },
+  body:{
+    dataStores:{},
+    parameters:{_boId:"bdHospitalServiceImpl",_methodName:"findALl"}
+  }
+}
+
+export const KeShiMingChen = {
+  "header":{
+    "code":0,
+    "message":{
+      "title":"",
+      "detail":""
+    }
+  },
+  "body":{
+    "dataStores":{
+      "items":{
+        "rowSet":{
+          "primary":[
+            {
+              "compCode":"100001",
+              "acctYear":"2019",
+              "deptServiceType":"cbcs"
+            }
+          ],
+          "delete":[
+
+          ],
+          "filter":[
+
+          ]
+        },
+        "name":"items",
+        "pageNumber":1,
+        "pageSize":2147483647,
+        "recordCount":1,
+        "rowSetName":"com.viewhigh.excel.domain.entity.BdDept"
+      }
+    },
+    "parameters":{
+      "_boId":"bdDeptServiceImpl",
+      "_methodName":"findAllByCompYear",
+      "_methodParameterTypes":"String,String,String",
+      "_parameters":"compCode,acctYear,deptServiceType",
+      "compCode":"100001",
+      "acctYear":"2019",
+      "deptServiceType":"cbcs"
+    }
   }
 }
 

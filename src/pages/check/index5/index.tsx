@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Form, Select, Button, Card, DatePicker } from 'antd';
+import {Form, Select, Button, Card, DatePicker} from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
@@ -15,7 +15,7 @@ import styles from './style.less';
 
 interface TableListProps {
   dispatch: Dispatch;
-  index10: StateType;
+  checkIndex5: StateType;
   submitting: boolean;
 }
 
@@ -28,6 +28,8 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
   const [height, setHeight] = useState<number>(window.innerHeight - Constants.tableHeight);
   const [selectedRows, setSelectRows] = useState<TableListItem[]>([]);
   const [danWeis, setDanWeis] = useState<{ compCode: string }[]>([]);
+  const [keShiMingChens, setKeShiMingChen] = useState<any[]>([]);
+
   const [form] = Form.useForm();
   const [data, setData] = useState<TableListData>({
     list: [],
@@ -43,7 +45,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
   const list = (params: { [key: string]: any }) => {
     dispatch({
-      type: 'index10/list',
+      type: 'checkIndex5/list',
       payload: params,
       callback: (response: TableListData) => {
         console.log('response', response);
@@ -59,9 +61,18 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       },
     });
   };
+  const keShiMingChen = () => {
+    dispatch({
+      type: 'common/keShiMingChen',
+      callback: (response: { compCode: string }[]) => {
+        setKeShiMingChen(response);
+      },
+    });
+  };
   useEffect(() => {
     list({ ...formatFormParams(form.getFieldsValue()) });
     danWei();
+    keShiMingChen()
   }, []);
 
   const columns: ColumnProps<TableListItem>[] = [
@@ -70,67 +81,42 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, index10) => <span>{index10 + 1}</span>,
+      render: (text, record, checkIndex5) => <span>{checkIndex5 + 1}</span>,
     },
     {
-      title: '病房等级',
-      dataIndex: 'wardLevel',
-      width: 60,
+      title: '年度',
+      dataIndex: 'acctYear',
+      width: 100,
     },
     {
-      title: '病房规格（床/间）',
-      dataIndex: 'wardStand',
+      title: '成本科室编码',
+      dataIndex: 'deptCode',
       width: 120,
     },
     {
-      title: '收费标准（元/床.日）',
-      dataIndex: 'changeStand',
-      width: 140,
-    },
-    {
-      title: '病房面积（平方米/间）',
-      dataIndex: 'wardArea',
-      width: 140,
-    },
-    {
-      title: '病房数量（间）',
-      dataIndex: 'wardNum',
+      title: '成本科室名称',
+      dataIndex: 'deptName',
       width: 120,
     },
     {
-      title: '床位数',
-      dataIndex: 'bedNum',
+      title: '全成本报表金额',
+      dataIndex: 'reportAmount',
+      width: 120,
+    },
+    {
+      title: '列入非床位费金额',
+      dataIndex: 'nobedAmount',
       width: 80,
     },
     {
-      title: '病房面积合计（平方米）',
-      dataIndex: 'wardAreaAll',
-      width: 160,
+      title: '列入床位费金额',
+      dataIndex: 'bedAmount',
+      width: 80,
     },
     {
-      title: '住院大楼名称',
-      dataIndex: 'buildName',
-      width: 120,
-    },
-    {
-      title: '住院大楼竣工时间',
-      dataIndex: 'buildCompleteTime',
-      width: 120,
-    },
-    {
-      title: '住院大楼总造价',
-      dataIndex: 'buildCost',
-      width: 120,
-    },
-    {
-      title: '住院大楼总建筑面积',
-      dataIndex: 'buildArea',
-      width: 120,
-    },
-    {
-      title: '备注',
-      dataIndex: 'remark',
-      width: 120,
+      title: '核减金额',
+      dataIndex: 'reduceAmount',
+      width: 80,
     },
   ];
 
@@ -175,18 +161,27 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             onFinish={onFinish}
             initialValues={{
               compCode: '100001',
-              acctYear: moment('2019'),
+              addYear: moment('2019'),
+              deptCode:'',
             }}
           >
             <Form.Item label="单位" name="compCode">
               <Select style={{ width: 100 }}>
-                {danWeis.map((item) => (
-                  <Select.Option value={`${item.compCode}`}>{item.compCode}</Select.Option>
+                {danWeis.map((item,index) => (
+                  <Select.Option key={index} value={`${item.compCode}`}>{item.compCode}</Select.Option>
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item label="年度" name="acctYear">
+            <Form.Item label="年度" name="addYear">
               <DatePicker format="YYYY" picker="year" />
+            </Form.Item>
+            <Form.Item label="成本科室名称" name="deptCode">
+              <Select style={{ width: 160 }}>
+                <Select.Option value=''>全部</Select.Option>
+                {keShiMingChens.map((item,index) => (
+                  <Select.Option key={index} value={`${item.compCode}`}>{item.deptName}</Select.Option>
+                ))}
+              </Select>
             </Form.Item>
             <Form.Item>
               <div className={styles.btns}>
@@ -205,7 +200,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>医疗机构病房构成明细表</span>
+              <span className={styles.title}>资产折旧费审定</span>
               <div>
                 <Button type="primary">导入</Button>
                 <Button type="primary">导出</Button>
@@ -214,7 +209,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             </div>
           )}
           scroll={{
-            x: 1400,
+            x: 1200,
             y: height,
           }}
           columns={columns}
@@ -230,17 +225,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    index10,
+    checkIndex5,
     loading,
   }: {
-    index10: StateType;
+    checkIndex5: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    index10,
-    submitting: loading.effects['index10/list'],
+    checkIndex5,
+    submitting: loading.effects['checkIndex5/list'],
   }),
 )(TableList);

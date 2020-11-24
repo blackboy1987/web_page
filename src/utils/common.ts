@@ -46,5 +46,12 @@ export const formatFormParams = (params:{[key:string]:any }) =>{
       acctYear:params.acctYear.format("YYYY"),
     }
   }
+  if(params.addYear){
+    console.log(params.addYear.format("YYYY"),"params.addYear");
+    return {
+      ...params,
+      addYear:params.addYear.format("YYYY"),
+    }
+  }
   return params;
 }
