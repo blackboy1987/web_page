@@ -81,11 +81,22 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
 
   useEffect(() => {
     onSearch({ ...formatFormParams(form.getFieldsValue()) });
-    danWei();
-    keShiMingChen();
-    keShiLeiXin();
-    itemCode();
-    menuid();
+    if(searchKeys.includes('compCode')){
+      danWei();;
+    }
+    if(searchKeys.includes('deptCode')){
+      keShiMingChen();
+    }
+    if(searchKeys.includes('deptKind')){
+      keShiLeiXin();
+    }
+    if(searchKeys.includes('itemCode')){
+      itemCode();
+    }
+    if(searchKeys.includes('menuid')){
+      menuid();
+    }
+
   }, []);
   return (
     <div className={styles.standardTable}>

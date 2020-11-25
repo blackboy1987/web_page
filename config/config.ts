@@ -287,18 +287,18 @@ export default defineConfig({
                 },
                 {
                   name: '有成本无收入',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index21',
+                  component: './check/index21',
                 },
                 {
                   name: '成本数据校验',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index22',
+                  component: './check/index22',
                 },
                 {
                   name: '编码名称校验',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index23',
+                  component: './check/index23',
                 },
               ]
             },
