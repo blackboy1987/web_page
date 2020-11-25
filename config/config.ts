@@ -242,8 +242,8 @@ export default defineConfig({
                 },
                 {
                   name: '科室成本收入比',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index14',
+                  component: './check/index14',
                 },
                 {
                   name: '全院项目成本',
@@ -257,33 +257,33 @@ export default defineConfig({
                 },
                 {
                   name: '未匹配项目结果',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index15',
+                  component: './check/index15',
                 },
                 {
                   name: '床位费测算',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index16',
+                  component: './check/index16',
                 },
                 {
                   name: '科室收入成本核对',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index17',
+                  component: './check/index17',
                 },
                 {
                   name: '原始归集结果核对',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index18',
+                  component: './check/index18',
                 },
                 {
                   name: '全院总成本核对',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index19',
+                  component: './check/index19',
                 },
                 {
                   name: '解锁医院数据',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  path: '/check/index20',
+                  component: './check/index20',
                 },
                 {
                   name: '有成本无收入',

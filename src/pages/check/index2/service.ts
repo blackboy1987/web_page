@@ -34,8 +34,8 @@ export async function list(params:TableListParams) {
               ]
             },
             "name":"items",
-            "pageNumber":params.pageNumber,
-            "pageSize":params.pageSize,
+            "pageNumber":params.pageNumber||1,
+            "pageSize":params.pageSize||20,
             "recordCount":1,
             "rowSetName":"com.viewhigh.excel.domain.entity.BdDept"
           }
@@ -45,8 +45,8 @@ export async function list(params:TableListParams) {
           "_methodName":"findByParam",
           "_methodParameterTypes":"com.viewhigh.excel.domain.entity.BdDept",
           "_parameters":"items",
-          "_pageNumber":params.pageNumber,
-          "_pageSize":params.pageSize,
+          "_pageNumber":params.pageNumber||1,
+          "_pageSize":params.pageSize||20,
           "_calc":true
         }
       }

@@ -49,6 +49,8 @@ export interface TableListParams {
   deptCode?:string;
   deptKind?:string;
   deptName?:string;
+  itemCode?:string;
+  menuid?:string;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
 }

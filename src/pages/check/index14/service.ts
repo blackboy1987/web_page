@@ -21,7 +21,7 @@ export async function list(params:TableListParams) {
                 {
                   "compCode":params.compCode,
                   "acctYear":params.acctYear,
-                  "deptName":params.deptName,
+                  "deptCode":params.deptName,
                 }
               ],
               "delete":[
@@ -35,13 +35,13 @@ export async function list(params:TableListParams) {
             "pageNumber":params.pageNumber||1,
             "pageSize":params.pageSize||20,
             "recordCount":1,
-            "rowSetName":"com.viewhigh.entity.costcalc.CalcDeptCostVo"
+            "rowSetName":"com.viewhigh.entity.costcalc.CalcItemQueryVo"
           }
         },
         "parameters":{
-          "_boId":"deptCostCollServiceImp",
+          "_boId":"deptInRatioService",
           "_methodName":"queryData",
-          "_methodParameterTypes":"com.viewhigh.entity.costcalc.CalcDeptCostVo",
+          "_methodParameterTypes":"com.viewhigh.entity.costcalc.CalcItemQueryVo",
           "_parameters":"items",
           "_pageNumber":params.pageNumber||1,
           "_pageSize":params.pageSize||20,
@@ -86,13 +86,13 @@ export async function calc(params:TableListParams) {
             "pageNumber":params.pageNumber||1,
             "pageSize":params.pageSize||20,
             "recordCount":1,
-            "rowSetName":"com.viewhigh.entity.costcalc.CalcDeptCostVo"
+            "rowSetName":"com.viewhigh.entity.costcalc.CalcItemQueryVo"
           }
         },
         "parameters":{
-          "_boId":"deptCostCollServiceImp",
-          "_methodName":"calc",
-          "_methodParameterTypes":"com.viewhigh.entity.costcalc.CalcDeptCostVo",
+          "_boId":"deptInRatioService",
+          "_methodName":"calcData",
+          "_methodParameterTypes":"com.viewhigh.entity.costcalc.CalcItemQueryVo",
           "_parameters":"items"
         }
       }
@@ -120,7 +120,7 @@ export async function download(params:TableListParams) {
                 {
                   "compCode":params.compCode,
                   "acctYear":params.acctYear,
-                  "deptName":params.deptName
+                  "deptCode":params.deptName,
                 }
               ],
               "delete":[
@@ -134,13 +134,13 @@ export async function download(params:TableListParams) {
             "pageNumber":params.pageNumber||1,
             "pageSize":params.pageSize||20,
             "recordCount":1,
-            "rowSetName":"com.viewhigh.entity.costcalc.CalcDeptCostVo"
+            "rowSetName":"com.viewhigh.entity.costcalc.CalcItemQueryVo"
           }
         },
         "parameters":{
-          "_boId":"deptCostCollServiceImp",
-          "_methodName":"exprotData",
-          "_methodParameterTypes":"com.viewhigh.entity.costcalc.CalcDeptCostVo",
+          "_boId":"deptInRatioService",
+          "_methodName":"exportData",
+          "_methodParameterTypes":"com.viewhigh.entity.costcalc.CalcItemQueryVo",
           "_parameters":"items"
         }
       }
