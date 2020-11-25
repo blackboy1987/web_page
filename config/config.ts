@@ -303,6 +303,17 @@ export default defineConfig({
               ]
             },
             {
+              name:'数据分析',
+              path: '/dataAnalysis',
+              routes: [
+                {
+                  name: '收入审定',
+                  path: '/dataAnalysis/index1',
+                  component: './dataAnalysis/index1',
+                },
+              ]
+            },
+            {
               component: '404',
             },
           ],

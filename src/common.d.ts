@@ -46,6 +46,7 @@ export interface TableListParams {
   currentPage?: number;
   compCode?:string;
   acctYear?:string;
+  eAcctYear?:string;
   deptCode?:string;
   deptKind?:string;
   deptName?:string;

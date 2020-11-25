@@ -126,6 +126,14 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
           ) : null
         }
         {
+          searchKeys.includes('rangeYear') ? (
+            <Form.Item label="年度" name="rangeYear">
+              <DatePicker.RangePicker format="YYYY" picker="year" />
+            </Form.Item>
+          ) : null
+        }
+
+        {
           searchKeys.includes('acctYear') ? (
             <Form.Item label="年度" name="acctYear">
               <DatePicker format="YYYY" picker="year" />
