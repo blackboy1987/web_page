@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Form, Card} from 'antd';
+import { Form, Card } from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
@@ -16,7 +16,7 @@ import moment from "moment";
 
 interface TableListProps {
   dispatch: Dispatch;
-  dataAnalysisIndex3: StateType;
+  dataAnalysisIndex2: StateType;
   submitting: boolean;
 }
 
@@ -31,52 +31,40 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, dataAnalysisIndex3) => <span>{dataAnalysisIndex3 + 1}</span>,
+      render: (text, record, dataAnalysisIndex2) => <span>{dataAnalysisIndex2 + 1}</span>,
     },
     {
-      title: '成本科室',
-      dataIndex: 'costDept',
+      title: '标准项目编码',
+      dataIndex: 'sItemCode',
       width: 100,
     },
     {
-      title: '医生成本收入比',
-      children:[
-        {
-          title: '2017',
-          dataIndex: 'dRatio2017',
-          width: 50,
-        },
-        {
-          title: '2018',
-          dataIndex: 'dRatio2018',
-          width: 50,
-        },
-        {
-          title: '2019',
-          dataIndex: 'dRatio2019',
-          width: 50,
-        },
-      ]
+      title: '标准项目名称',
+      dataIndex: 'chargeName',
+      width: 150,
     },
     {
-      title: '护士成本收入比',
-      children:[
-        {
-          title: '2017',
-          dataIndex: 'nRatio2017',
-          width: 50,
-        },
-        {
-          title: '2018',
-          dataIndex: 'nRatio2018',
-          width: 50,
-        },
-        {
-          title: '2019',
-          dataIndex: 'nRatio2019',
-          width: 50,
-        },
-      ]
+      title: '省价格',
+      dataIndex: 'sItemPrice',
+      width: 90,
+    },
+    {
+      title: '市价格',
+      dataIndex: 'price',
+      width: 90,
+    },
+    {
+      title: '医院价格',
+      dataIndex: 'itemPrice',
+      width: 90,
+    },
+    {
+      title: '单位成',
+      children:[],
+    },
+    {
+      title: '盈亏率',
+      children:[],
     },
   ]);
   const [form] = Form.useForm();
@@ -94,41 +82,53 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 
   const refreshColumns=(params: { [key: string]: any })=>{
-    const {acctYear,eAcctYear} = params;
-    console.log("params",params);
-    const acctYearInt = parseInt(acctYear);
-    const eAcctYearInt = parseInt(eAcctYear);
-    const years = [];
-    for(let start=acctYearInt;start<=eAcctYearInt;start+=1){
-      years.push(start);
-    }
-    console.log("years",years);
+    const {deptName1} = params;
     setColumns([
       {
         title: '',
         dataIndex: 'id',
         width: 40,
         fixed: 'left',
-        render: (text, record, dataAnalysisIndex3) => <span>{dataAnalysisIndex3 + 1}</span>,
+        render: (text, record, dataAnalysisIndex2) => <span>{dataAnalysisIndex2 + 1}</span>,
       },
       {
-        title: '成本科室',
-        dataIndex: 'costDept',
+        title: '标准项目编码',
+        dataIndex: 'sItemCode',
         width: 100,
       },
       {
-        title: '医生成本收入比',
-        children:years.map(year=>({
-          title: `${year}`,
-          dataIndex: `dRatio${year}`,
+        title: '标准项目名称',
+        dataIndex: 'chargeName',
+        width: 150,
+      },
+      {
+        title: '省价格',
+        dataIndex: 'sItemPrice',
+        width: 100,
+      },
+      {
+        title: '市价格',
+        dataIndex: 'price',
+        width: 100,
+      },
+      {
+        title: '医院价格',
+        dataIndex: 'itemPrice',
+        width: 100,
+      },
+      {
+        title: '单位成本',
+        children:deptName1.map(deptName=>({
+          title: `${deptName.label}`,
+          dataIndex: `costSum${deptName.value}`,
           width: 50,
         }))
       },
       {
-        title: '护士成本收入比',
-        children:years.map(year=>({
-          title: `${year}`,
-          dataIndex: `nRatio${year}`,
+        title: '盈亏率',
+        children:deptName1.map(deptName=>({
+          title: `${deptName.label}`,
+          dataIndex: `proLoRate${deptName.value}`,
           width: 50,
         }))
       },
@@ -138,7 +138,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
   const list = (params: { [key: string]: any }) => {
     refreshColumns(params);
     dispatch({
-      type: 'dataAnalysisIndex3/list',
+      type: 'dataAnalysisIndex2/list',
       payload: params,
       callback: (response: TableListData) => {
         console.log('response', response);
@@ -168,10 +168,10 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           <SearchBar
             initialValues={{
               compCode: '100001',
-              rangeYear: [moment('2017'),moment('2019')],
-              deptCode:'',
+              acctYear: moment('2019'),
+              deptName1:[{key:'708',label:'内科',value:'708'},{key:'709',label:'外一科',value:'709'}],
             }}
-            searchKeys={['compCode','deptCode','rangeYear']}
+            searchKeys={['compCode','acctYear','deptName1','sItemCode']}
             onSearch={(params:{[key:string]:any}) => list(params)}
           />
         </Card>
@@ -203,17 +203,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    dataAnalysisIndex3,
+    dataAnalysisIndex2,
     loading,
   }: {
-    dataAnalysisIndex3: StateType;
+    dataAnalysisIndex2: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    dataAnalysisIndex3,
-    submitting: loading.effects['dataAnalysisIndex3/list']||loading.effects['dataAnalysisIndex3/calc']||loading.effects['dataAnalysisIndex3/download'],
+    dataAnalysisIndex2,
+    submitting: loading.effects['dataAnalysisIndex2/list']||loading.effects['dataAnalysisIndex2/calc']||loading.effects['dataAnalysisIndex2/download'],
   }),
 )(TableList);

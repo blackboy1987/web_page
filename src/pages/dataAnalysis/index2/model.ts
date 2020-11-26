@@ -19,7 +19,7 @@ export interface ModelType {
 }
 
 const Model: ModelType = {
-  namespace: 'dataAnalysisIndex3',
+  namespace: 'dataAnalysisIndex2',
   state: {
     status: undefined,
   },

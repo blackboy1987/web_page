@@ -311,6 +311,11 @@ export default defineConfig({
                   path: '/dataAnalysis/index1',
                   component: './dataAnalysis/index1',
                 },
+                {
+                  name: '院内科室项目成本对比',
+                  path: '/dataAnalysis/index2',
+                  component: './dataAnalysis/index2',
+                },
               ]
             },
             {

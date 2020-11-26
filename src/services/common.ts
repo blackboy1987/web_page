@@ -51,3 +51,18 @@ export async function menuid(){
     data: {"header":{"code":0,"message":{"title":"","detail":""}},"body":{"dataStores":{"item":{"rowSet":{"primary":[{"compCode":"100001","acctYear":"2019","userCode":"fgw","menuid":""}],"delete":[],"filter":[]},"name":"item","pageNumber":1,"pageSize":2147483647,"recordCount":1,"rowSetName":"com.viewhigh.entity.ScHospDataLock"}},"parameters":{"_boId":"openLockingDataServiceImpl","_methodName":"queryData","_methodParameterTypes":"com.viewhigh.entity.ScHospDataLock","_parameters":"item","_pageNumber":1,"_pageSize":100,"_calc":true}}},
   })
 }
+
+export async function chenBenKeShi(){
+  return request('http://120.25.198.191:8080/api/commonProcessor/commonMethod',{
+    method: 'POST',
+    data:{"header":{"code":0,"message":{"title":"","detail":""}},"body":{"dataStores":{},"parameters":{"compCode":"100001","_boId":"inHostCostCompareServiceImpl","_methodName":"findAllByComp","_methodParameterTypes":"String","_parameters":"compCode"}}},
+  })
+}
+
+export async function biaoZhunXiangMu(){
+  return request('http://120.25.198.191:8080/api/commonProcessor/commonMethod',{
+    method: 'POST',
+    data:{"header":{"code":0,"message":{"title":"","detail":""}},"body":{"dataStores":{},"parameters":{"_boId":"standItemServiceImpl","_methodName":"findBdStandItem"}}}
+  })
+}
+

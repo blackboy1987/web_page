@@ -23,6 +23,8 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
   const [keShiLeiXins, setKeShiLeiXins] = useState<any[]>([]);
   const [itemCodes, setItemCodes] = useState<any[]>([]);
   const [menuIds,setMenuIds] = useState<any[]>([]);
+  const [chenBenKeShis,setChenBenKeShis] = useState<any[]>([]);
+  const [biaoZhunXiangMus,setBiaoZhunXiangMus] = useState<any[]>([]);
 
   const danWei = () => {
     dispatch({
@@ -69,6 +71,24 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
     });
   };
 
+  const chenBenKeShi = () => {
+    dispatch({
+      type: 'common/chenBenKeShi',
+      callback: (response: { compCode: string }[]) => {
+        setChenBenKeShis(response);
+      },
+    });
+  };
+
+  const biaoZhunXiangMu = () => {
+    dispatch({
+      type: 'common/biaoZhunXiangMu',
+      callback: (response: { compCode: string }[]) => {
+        setBiaoZhunXiangMus(response);
+      },
+    });
+  };
+
   const onFinish = (values: { [key: string]: any }) => {
     onSearch({...formatFormParams(values)});
   };
@@ -95,6 +115,12 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
     }
     if(searchKeys.includes('menuid')){
       menuid();
+    }
+    if(searchKeys.includes('deptName1')){
+      chenBenKeShi();
+    }
+    if(searchKeys.includes('sItemCode')){
+      biaoZhunXiangMu();
     }
 
   }, []);
@@ -201,6 +227,31 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
             </Form.Item>
           ) : null
         }
+
+        {
+          searchKeys.includes('sItemCode') ? (
+            <Form.Item label="标准项目" name="sItemCode">
+              <Select mode='multiple' style={{ width: 240 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+                {biaoZhunXiangMus.map((item) => (
+                  <Select.Option value={`${item.chargeCode}`} key={`${item.chargeCode}`}>{item.chargeName}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          ) : null
+        }
+        {
+          searchKeys.includes('deptName1') ? (
+            <Form.Item label="成本科室" name="deptName1">
+              <Select labelInValue mode='multiple' style={{ width: 240 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+                <Select.Option value=''>全部</Select.Option>
+                {chenBenKeShis.map((item) => (
+                  <Select.Option value={`${item.groupCode}`} key={`${item.groupCode}`}>{item.groupName}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          ) : null
+        }
+
         <Form.Item>
           <div className={styles.btns}>
             <Button type="primary" htmlType="submit">

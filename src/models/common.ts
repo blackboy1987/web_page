@@ -1,5 +1,5 @@
 import { Effect } from 'umi';
-import { danWei, keShi, keShiMingChen,itemCode,menuid } from '@/services/common';
+import { danWei, keShi, keShiMingChen,itemCode,menuid,chenBenKeShi,biaoZhunXiangMu } from '@/services/common';
 
 export interface StateType {
 
@@ -15,6 +15,8 @@ export interface CommonModelType {
     keShi:Effect;
     itemCode:Effect;
     menuid:Effect;
+    chenBenKeShi:Effect;
+    biaoZhunXiangMu:Effect;
   };
 }
 
@@ -63,7 +65,21 @@ const Model: CommonModelType = {
       const response = yield call(menuid, payload);
       if(callback){
         const {result=[]} = response.body.dataStores.result.rowDatas[0];
-        console.log(result,"menuid");
+        callback(result);
+      }
+    },
+    *chenBenKeShi({ payload,callback }, { call }) {
+      const response = yield call(chenBenKeShi, payload);
+      if(callback){
+        const result = response.body.dataStores.result.rowDatas;
+        callback(result);
+      }
+    },
+    *biaoZhunXiangMu({ payload,callback }, { call }) {
+      const response = yield call(biaoZhunXiangMu, payload);
+      if(callback){
+        const result = response.body.dataStores.result.rowDatas;
+        console.log("aa",result);
         callback(result);
       }
     },

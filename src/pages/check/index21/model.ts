@@ -1,6 +1,6 @@
 import { Effect } from 'umi';
 
-import { list, download,lock,unLock } from './service';
+import { list, download} from './service';
 import {ApiResponse} from "@/utils/paramFormat";
 import {parseListResponse} from "@/utils/common";
 
@@ -15,8 +15,6 @@ export interface ModelType {
   effects: {
     list: Effect;
     download:Effect;
-    lock:Effect;
-    unLock:Effect;
   };
 }
 
@@ -38,20 +36,6 @@ const Model: ModelType = {
       const {status,message} = response.body.dataStores.result.rowDatas[0];
       if(callback){
         callback({status,msg:message});
-      }
-    },
-    *lock({ payload,callback }, { call }) {
-      const response:ApiResponse = yield call(lock, payload);
-      const {result} = response.body.parameters;
-      if(callback){
-        callback({code:result});
-      }
-    },
-    *unLock({ payload,callback }, { call }) {
-      const response:ApiResponse = yield call(unLock, payload);
-      const {result} = response.body.parameters;
-      if(callback){
-        callback({code:result});
       }
     },
   },

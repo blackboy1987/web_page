@@ -36,6 +36,12 @@ export interface ParamFormat {
   }
 }
 
+interface DeptName1 {
+  key:string;
+  label:string;
+  value:string;
+}
+
 export interface TableListParams {
   status?: string;
   name?: string;
@@ -50,6 +56,8 @@ export interface TableListParams {
   deptCode?:string;
   deptKind?:string;
   deptName?:string;
+  deptName1?:DeptName1[];
+  sItemCode?:string[];
   itemCode?:string;
   menuid?:string;
   filter?: { [key: string]: any[] };
