@@ -91,236 +91,211 @@ export default defineConfig({
               ],
             },
             {
-              name: '数据录入',
-              path: '/input',
+              name:'数据交换',
+              path:'/exchange',
               routes: [
                 {
-                  name: '资产负债表',
-                  path: '/input/index1',
-                  component: './input/index1',
-                },
+                  name:'数据交换',
+                  path:'/data',
+                  component: './Welcome'
+                }
+              ]
+            },
+            {
+              name:'数据录入',
+              path:'/entry',
+              routes: [
                 {
-                  name: '收入费用总表',
-                  path: '/input/index2',
-                  component: './input/index2',
-                },
-                {
-                  name: '全成本报表录入',
-                  path: '/input/index3',
+                  name:'全成本报表',
+                  path:'/entry/index3',
                   component: './input/index3',
                 },
                 {
-                  name: '收入报表录入',
-                  path: '/input/index4',
+                  name:'收入费用明细表',
+                  path:'/entry/index4',
                   component: './input/index4',
                 },
                 {
-                  name: '数字及财务分析表',
-                  path: '/input/index5',
-                  component: './input/index5',
-                },
-                {
-                  name: '收入频次录入',
-                  path: '/input/index6',
+                  name:'收入数据',
+                  path:'/entry/index6',
                   component: './input/index6',
                 },
                 {
-                  name: '材料明细录入',
-                  path: '/input/index7',
-                  component: './input/index7',
-                },
-                {
-                  name: '资产折旧录入',
-                  path: '/input/index8',
-                  component: './input/index8',
-                },
-                {
-                  name: '人员经费录入',
-                  path: '/input/index9',
+                  name:'人力成本',
+                  path:'/entry/index9',
                   component: './input/index9',
                 },
                 {
-                  name: '医疗机构病房构成明细表',
-                  path: '/input/index10',
-                  component: './input/index10',
+                  name:'物资成本',
+                  path:'/entry/index7',
+                  component: './input/index7',
                 },
                 {
-                  name: '收入数据核对',
-                  path: '/input/index11',
-                  component: './input/index11',
-                },
-                {
-                  name: '收费项目对照',
-                  path: '/input/index12',
-                  component: './input/index12',
-                },
-                {
-                  name: '成本科室对照',
-                  path: '/input/index13',
-                  component: './input/index13',
+                  name:'资产折旧',
+                  path:'/entry/index8',
+                  component: './input/index8',
                 },
               ]
             },
             {
-              name: '核算平台',
-              path: '/check',
+              name:'数据审核',
+              path:'/audit',
               routes: [
                 {
-                  name: '收入审定',
-                  path: '/check/index1',
-                  component: './check/index1',
+                  name:'人力成本审核(无)',
+                  path:'/audit',
+                  component: './Welcome'
                 },
                 {
-                  name: '卫生材料费审定',
-                  path: '/check/index2',
-                  component: './check/index2',
+                  name:'物资成本审核(无)',
+                  path:'/audit',
+                  component: './Welcome'
                 },
                 {
-                  name: '资产折旧费审定',
-                  path: '/check/index3',
+                  name:'资产折旧审核',
+                  path:'/audit/index3',
                   component: './check/index3',
                 },
                 {
-                  name: '人员经费审核',
-                  path: '/check/index4',
-                  component: './check/index4',
-                },
-                {
-                  name: '无形资产审核',
-                  path: '/check/index5',
+                  name:'无形资产审核',
+                  path:'/audit/index5',
                   component: './check/index5',
                 },
                 {
-                  name: '风险基金审核(未)',
-                  path: '/check/index6',
-                  component: './check/index6',
+                  name:'风险基金审核(未)',
+                  path:'/audit',
+                  component: './Welcome'
                 },
                 {
-                  name: '其他费用审核',
-                  path: '/check/index7',
+                  name:'其他成本审核',
+                  path:'/audit/index7',
                   component: './check/index7',
                 },
                 {
-                  name: '间接费用审核',
-                  path: '/check/index8',
+                  name:'间接成本审核',
+                  path:'/audit/index8',
                   component: './check/index8',
                 },
                 {
-                  name: '全院药事服务费用',
-                  path: '/check/index9',
-                  component: './check/index9',
-                },
-                {
-                  name: '特殊项目(手工)',
-                  path: '/check/index10',
-                  component: './check/index10',
-                },
-                {
-                  name: '特殊项目(系统)',
-                  path: '/check/index1',
-                  component: './check/index1',
-                },
-                {
-                  name: '诊查费项目',
-                  path: '/check/index11',
-                  component: './check/index11',
-                },
-                {
-                  name: '外协项目',
-                  path: '/check/index12',
-                  component: './check/index12',
-                },
-                {
-                  name: '科室成本归集',
-                  path: '/check/index13',
-                  component: './check/index13',
-                },
-                {
-                  name: '科室项目成本',
-                  path: '/check/index1',
-                  component: './check/index1',
-                },
-                {
-                  name: '科室成本收入比',
-                  path: '/check/index14',
-                  component: './check/index14',
-                },
-                {
-                  name: '全院项目成本',
-                  path: '/check/index1',
-                  component: './check/index1',
-                },
-                {
-                  name: '医院标准项目结果',
-                  path: '/check/index1',
-                  component: './check/index1',
-                },
-                {
-                  name: '未匹配项目结果',
-                  path: '/check/index15',
-                  component: './check/index15',
-                },
-                {
-                  name: '床位费测算',
-                  path: '/check/index16',
-                  component: './check/index16',
-                },
-                {
-                  name: '科室收入成本核对',
-                  path: '/check/index17',
-                  component: './check/index17',
-                },
-                {
-                  name: '原始归集结果核对',
-                  path: '/check/index18',
-                  component: './check/index18',
-                },
-                {
-                  name: '全院总成本核对',
-                  path: '/check/index19',
-                  component: './check/index19',
-                },
-                {
-                  name: '解锁医院数据',
-                  path: '/check/index20',
-                  component: './check/index20',
-                },
-                {
-                  name: '有成本无收入',
-                  path: '/check/index21',
-                  component: './check/index21',
-                },
-                {
-                  name: '成本数据校验',
-                  path: '/check/index22',
-                  component: './check/index22',
-                },
-                {
-                  name: '编码名称校验',
-                  path: '/check/index23',
-                  component: './check/index23',
+                  name:'数据核对（成本+收入）（无）',
+                  path:'/audit',
+                  component: './Welcome'
                 },
               ]
             },
             {
-              name:'数据分析',
-              path: '/dataAnalysis',
+              name:'数据整理',
+              path:'/settle',
               routes: [
                 {
-                  name: '收入审定',
-                  path: '/dataAnalysis/index1',
-                  component: './dataAnalysis/index1',
+                  name:'收入收据整理',
+                  path:'/settle/index6',
+                  component: './input/index6',
                 },
                 {
-                  name: '院内科室项目成本对比',
-                  path: '/dataAnalysis/index2',
-                  component: './dataAnalysis/index2',
+                  name:'物资数据整理（无）',
+                  path:'/settle',
+                  component: './Welcome'
                 },
                 {
-                  name: '院内科室间项目频次比较',
-                  path: '/dataAnalysis/index3',
-                  component: './dataAnalysis/index3',
+                  name:'资产数据整理（无）',
+                  path:'/settle',
+                  component: './Welcome'
                 },
+                {
+                  name:'材料专属查询（未）',
+                  path:'/settle',
+                  component: './Welcome'
+                },
+                {
+                  name:'资产专属查询（未）',
+                  path:'/settle',
+                  component: './Welcome'
+                },
+                {
+                  name:'收入收据整理（无）',
+                  path:'/settle',
+                  component: './Welcome'
+                },
+              ]
+            },
+            {
+              name:'成本计算',
+              path:'/cal',
+              routes: [
+                {
+                  name:'科室成本归集',
+                  path:'/settle/index13',
+                  component: './check/index13',
+                },
+                {
+                  name:'科室项目成本',
+                  path:'/settle/index1',
+                  component: './check/index1',
+                },
+                {
+                  name:'全院项目成本',
+                  path:'/settle/index1',
+                  component: './check/index1',
+                },
+                {
+                  name:'科室收入成本核对',
+                  path:'/settle/index17',
+                  component: './check/index17',
+                },
+                {
+                  name:'原始归集结果',
+                  path:'/settle/index18',
+                  component: './check/index18'
+                },
+                {
+                  name:'全院成本核对',
+                  path:'/settle/index19',
+                  component: './check/index19',
+                },
+              ]
+            },
+            {
+              name:'基础设置',
+              path:'/setting',
+              routes: [
+                {
+                  name:'字典设置',
+                  path:'/setting/dic',
+                  routes:[
+                    {
+                      name:'成本科室',
+                      path:'/setting/dic/index13',
+                      component: './input/index13',
+                    },
+                    {
+                      name:'核算科室（无）',
+                      path:'/setting/dic',
+                      component: './Welcome',
+                    },
+                    {
+                      name:'收费项目',
+                      path:'/setting/dic/index12',
+                      component: './input/index12',
+                    }
+                  ]
+                },
+                {
+                  name:'关系设置',
+                  path:'/setting/relation',
+                  routes: [
+                    {
+                      name:'成本科室关系',
+                      path:'/setting/relation/index13',
+                      component: './input/index13',
+                    },
+                    {
+                      name:'核算科室关系（未）',
+                      path:'/setting/relation',
+                      component: './input/index14',
+                    }
+                  ]
+                }
               ]
             },
             {
