@@ -316,6 +316,11 @@ export default defineConfig({
                   path: '/dataAnalysis/index2',
                   component: './dataAnalysis/index2',
                 },
+                {
+                  name: '院内科室间项目频次比较',
+                  path: '/dataAnalysis/index3',
+                  component: './dataAnalysis/index3',
+                },
               ]
             },
             {
