@@ -62,4 +62,7 @@ export interface TableListParams {
   menuid?:string;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+  riskRatio?:string;
+  dataId?:string;
+  mateInvCode?:string;
 }

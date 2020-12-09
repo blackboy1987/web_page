@@ -9,7 +9,7 @@ export interface SearchBarProps {
   dispatch: Dispatch;
   initialValues:{[key:string]:any};
   searchKeys:string[];
-  onSearch:(params:{[key:string]:string})=>void;
+  onSearch?:(params:{[key:string]:string})=>void;
   calc?:()=>void;
   onSave?:()=>void;
   formValuesChange?:(params:{[key:string]:string})=>void;
@@ -25,6 +25,7 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
   const [menuIds,setMenuIds] = useState<any[]>([]);
   const [chenBenKeShis,setChenBenKeShis] = useState<any[]>([]);
   const [biaoZhunXiangMus,setBiaoZhunXiangMus] = useState<any[]>([]);
+  const [caiLiaoMingChengs,setCaiLiaoMingChengs] = useState<any[]>([]);
 
   const danWei = () => {
     dispatch({
@@ -89,8 +90,19 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
     });
   };
 
+  const caiLiaoMingCheng = () =>{
+    dispatch({
+      type: 'common/caiLiaoMingCheng',
+      callback: (response: { compCode: string }[]) => {
+        setCaiLiaoMingChengs(response);
+      },
+    });
+  }
+
   const onFinish = (values: { [key: string]: any }) => {
-    onSearch({...formatFormParams(values)});
+    if(onSearch){
+      onSearch({...formatFormParams(values)});
+    }
   };
 
   const onValuesChange=()=>{
@@ -100,7 +112,9 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
   }
 
   useEffect(() => {
-    onSearch({ ...formatFormParams(form.getFieldsValue()) });
+    if(onSearch){
+      onSearch({ ...formatFormParams(form.getFieldsValue()) });
+    }
     if(searchKeys.includes('compCode')){
       danWei();;
     }
@@ -121,6 +135,9 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
     }
     if(searchKeys.includes('sItemCode')){
       biaoZhunXiangMu();
+    }
+    if(searchKeys.includes('mateInvCode')){
+      caiLiaoMingCheng();
     }
 
   }, []);
@@ -206,7 +223,7 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
         {
           searchKeys.includes('itemCode') ? (
             <Form.Item label="项目" name="itemCode">
-              <Select style={{ width: 240 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+              <Select style={{ width: 200 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
                 <Select.Option value=''>全部</Select.Option>
                 {itemCodes.map((item) => (
                   <Select.Option value={`${item.standCode}`} key={`${item.standCode}`}>{item.chargeName}</Select.Option>
@@ -242,7 +259,7 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
         {
           searchKeys.includes('deptName1') ? (
             <Form.Item label="成本科室" name="deptName1">
-              <Select labelInValue mode='multiple' style={{ width: 240 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+              <Select labelInValue mode='multiple' style={{ width: 200 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
                 <Select.Option value=''>全部</Select.Option>
                 {chenBenKeShis.map((item) => (
                   <Select.Option value={`${item.groupCode}`} key={`${item.groupCode}`}>{item.groupName}</Select.Option>
@@ -251,12 +268,39 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
             </Form.Item>
           ) : null
         }
+        {
+          searchKeys.includes('mateInvCode') ? (
+            <Form.Item label="材料名称" name="mateInvCode">
+              <Select style={{ width: 180 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+                <Select.Option value=''>全部</Select.Option>
+                {caiLiaoMingChengs.map((item) => (
+                  <Select.Option value={`${item.invCode}`} key={`${item.invCode}`}>{item.invName}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          ) : null
+        }
+        {
+          searchKeys.includes('riskRatio') ? (
+            <Form.Item label="风险基金比例" name="riskRatio">
+              <Select style={{ width: 240 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+                <Select.Option value='0'>全部</Select.Option>
+                <Select.Option value='0.003'>0.3%(三甲医院)</Select.Option>
+                <Select.Option value='0.002'>0.2%(二甲医院)</Select.Option>
+              </Select>
+            </Form.Item>
+          ) : null
+        }
 
         <Form.Item>
           <div className={styles.btns}>
-            <Button type="primary" htmlType="submit">
-              查询
-            </Button>
+            {
+              onSearch ? (
+                <Button type="primary" htmlType="submit">
+                  查询
+                </Button>
+              ) : null
+            }
             {
               calc ? (
                 <Button type="primary" onClick={calc}>计算</Button>

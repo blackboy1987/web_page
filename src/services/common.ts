@@ -66,3 +66,10 @@ export async function biaoZhunXiangMu(){
   })
 }
 
+export async function caiLiaoMingCheng(){
+  return request('http://120.25.198.191:8080/api/commonProcessor/commonMethod',{
+    method: 'POST',
+    data:{"header":{"code":0,"message":{"title":"","detail":""}},"body":{"dataStores":{},"parameters":{"compCode":"100001","acctYear":"2016","_boId":"bdMaterialsServiceImpl","_methodName":"findAll","_methodParameterTypes":"String,String","_parameters":"compCode,acctYear"}}}
+  })
+}
+

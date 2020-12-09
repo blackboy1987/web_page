@@ -142,14 +142,14 @@ export default defineConfig({
               path:'/audit',
               routes: [
                 {
-                  name:'人力成本审核(无)',
-                  path:'/audit',
-                  component: './Welcome'
+                  name:'人力成本审核',
+                  path:'/audit/index9',
+                  component: './input/index9',
                 },
                 {
-                  name:'物资成本审核(无)',
-                  path:'/audit',
-                  component: './Welcome'
+                  name:'物资成本审核',
+                  path:'/audit/index2',
+                  component: './check/index2',
                 },
                 {
                   name:'资产折旧审核',
@@ -162,9 +162,9 @@ export default defineConfig({
                   component: './check/index5',
                 },
                 {
-                  name:'风险基金审核(未)',
-                  path:'/audit',
-                  component: './Welcome'
+                  name:'风险基金审核',
+                  path:'/audit/eiskRatio',
+                  component: './eiskRatio'
                 },
                 {
                   name:'其他成本审核',
@@ -177,9 +177,9 @@ export default defineConfig({
                   component: './check/index8',
                 },
                 {
-                  name:'数据核对（成本+收入）（无）',
-                  path:'/audit',
-                  component: './Welcome'
+                  name:'数据核对（成本+收入）',
+                  path:'/audit/index11',
+                  component: './input/index11',
                 },
               ]
             },
@@ -194,27 +194,27 @@ export default defineConfig({
                 },
                 {
                   name:'物资数据整理（无）',
-                  path:'/settle',
+                  path:'/settle/1',
                   component: './Welcome'
                 },
                 {
-                  name:'资产数据整理（无）',
-                  path:'/settle',
-                  component: './Welcome'
+                  name:'资产数据整理/资产折旧',
+                  path:'/settle/index8',
+                  component: './input/index8',
                 },
                 {
-                  name:'材料专属查询（未）',
-                  path:'/settle',
-                  component: './Welcome'
+                  name:'材料专属查询',
+                  path:'/settle/exclusiveMaterial',
+                  component: './exclusiveMaterial'
                 },
                 {
                   name:'资产专属查询（未）',
-                  path:'/settle',
+                  path:'/settle/2',
                   component: './Welcome'
                 },
                 {
                   name:'收入收据整理（无）',
-                  path:'/settle',
+                  path:'/settle/3',
                   component: './Welcome'
                 },
               ]
