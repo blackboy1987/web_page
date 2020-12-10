@@ -1,6 +1,8 @@
 import {ApiResponse} from "@/utils/paramFormat";
 import { Key, SorterResult, TablePaginationConfig } from 'antd/lib/table/interface';
 import { TableListItem } from '@/pages/check/index2/data';
+import {message} from "antd";
+import {Dispatch} from "@@/plugin-dva/connect";
 
 export const parseRequestParams = (params:{[key:string]:any}) =>{
   let values:{[key:string]:any} = {
@@ -103,4 +105,22 @@ export const downloadFile=(url:string,fileName:string)=>{
   ele.setAttribute('href',`http://120.25.198.191:8080/api/common/downLoad.jsp?fname=${url}`);
   ele.setAttribute('download' , fileName);
   ele.click();
+}
+
+
+export const download=(dispatch:Dispatch,type:string,formValues:{[key:string]:any})=>{
+  dispatch({
+    type: type,
+    payload: formValues,
+    callback: (response: {status:number,msg:string}) => {
+      const {status,msg} = response;
+      if(status===1){
+        message.success('文件正在下载...');
+        downloadFile(msg,msg);
+      }else{
+        message.error('文件下载失败');
+      }
+      console.log(status,msg);
+    },
+  });
 }

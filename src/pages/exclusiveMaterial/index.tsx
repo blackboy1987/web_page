@@ -119,10 +119,8 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     sorter: SorterResult<TableListItem>,
   ) => {
     commonHandleTableChange(pagination,filtersArg,sorter,form.getFieldsValue(),(params)=>{
-      console.log(params,"params");
       list({
         ...params,
-        ...formValues,
       });
     });
   };

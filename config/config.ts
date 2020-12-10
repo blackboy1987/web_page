@@ -208,9 +208,9 @@ export default defineConfig({
                   component: './exclusiveMaterial'
                 },
                 {
-                  name:'资产专属查询（未）',
-                  path:'/settle/2',
-                  component: './Welcome'
+                  name:'资产专属查询',
+                  path:'/settle/assetMaterial',
+                  component: './assetMaterial'
                 },
                 {
                   name:'收入收据整理（无）',

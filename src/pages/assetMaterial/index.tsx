@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Form, Button, Card, message, Modal } from 'antd';
+import {Form, Card, message, Button} from 'antd';
 import { Constants } from '@/utils/constants';
 import { connect, Dispatch } from 'umi';
 import { StateType } from '@/pages/user/login/model';
 import { ColumnProps } from 'antd/es/table';
 import { Key, SorterResult, TablePaginationConfig } from 'antd/lib/table/interface';
-import { commonHandleTableChange, downloadFile } from '@/utils/common';
+import {commonHandleTableChange, download} from '@/utils/common';
 import StandardTable from '@/components/StandTable1';
 import { TableListData, TableListItem } from './data.d';
 // @ts-ignore
@@ -16,7 +16,7 @@ import moment from "moment";
 
 interface TableListProps {
   dispatch: Dispatch;
-  checkIndex20: StateType;
+  assetMaterial: StateType;
   submitting: boolean;
 }
 
@@ -42,7 +42,7 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
   const list = (params: { [key: string]: any }) => {
     setFormValues(params);
     dispatch({
-      type: 'checkIndex20/list',
+      type: 'assetMaterial/list',
       payload: params,
       callback: (response: TableListData) => {
         console.log('response', response);
@@ -57,32 +57,56 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
       dataIndex: 'id',
       width: 40,
       fixed: 'left',
-      render: (text, record, checkIndex20) => <span>{checkIndex20 + 1}</span>,
+      render: (text, record, index) => <span>{index + 1}</span>,
     },
     {
-      title: '年度',
+      title: '年',
       dataIndex: 'acctYear',
-      width: 120,
+      width: 40,
     },
     {
-      title: '菜单',
-      dataIndex: 'menuid',
-      width: 120,
+      title: '科室编码',
+      dataIndex: 'deptCode',
+      width: 60,
     },
     {
-      title: '医院编码',
-      dataIndex: 'compName',
-      width: 120,
+      title: '科室名称',
+      dataIndex: 'deptName',
+      width: 100,
     },
     {
-      title: '医院名称',
-      dataIndex: 'compCode',
-      width: 120,
+      title: '成本科室',
+      dataIndex: 'costDept',
+      width: 100,
     },
     {
-      title: '是否锁定',
-      dataIndex: 'isOrNo',
-      width: 120,
+      title: '材料编码',
+      dataIndex: 'mateInvCode',
+      width: 80,
+    },
+    {
+      title: '资产名称',
+      dataIndex: 'equi_name',
+    },
+    {
+      title: '核对运算金额',
+      dataIndex: 'itemApportionAmount',
+      width: 100,
+    },
+    {
+      title: '系统运算金额',
+      dataIndex: 'equiAmount',
+      width: 100,
+    },
+    {
+      title: '项目编码',
+      dataIndex: 'itemCode',
+      width: 100,
+    },
+    {
+      title: '项目名称',
+      dataIndex: 'itemName',
+      width: 220,
     },
   ];
 
@@ -100,78 +124,6 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
     setSelectRows(rows);
   };
 
-  const download = () => {
-    dispatch({
-      type: 'checkIndex20/download',
-      payload: formValues,
-      callback: (response: {status:number,msg:string}) => {
-        const {status,msg} = response;
-        if(status===1){
-          message.success('文件正在下载...');
-          downloadFile(msg,msg);
-        }else{
-          message.error('文件下载失败');
-        }
-        console.log(status,msg);
-      },
-    });
-  };
-
-  const lock = () => {
-    if(!formValues.menuid){
-      message.error("请选择菜单");
-      return;
-    }
-
-
-    Modal.confirm({
-      title:'提示',
-      content:'确定解锁菜单?',
-      onOk:()=>{
-        dispatch({
-          type: 'checkIndex20/lock',
-          payload: formValues,
-          callback: (response: {code:string}) => {
-            const {code} = response;
-            if(code==='0'){
-              message.success('操作成功');
-            }else{
-              message.error('已是锁定状态');
-            }
-            list(formValues);
-          },
-        });
-      }
-    })
-  };
-
-  const unLock = () => {
-    if(!formValues.menuid){
-      message.error("请选择菜单");
-      return;
-    }
-    Modal.confirm({
-      title:'提示',
-      content:'确定锁定菜单?',
-      onOk:()=>{
-        dispatch({
-          type: 'checkIndex20/unLock',
-          payload: formValues,
-          callback: (response: {code:string}) => {
-            const {code} = response;
-            if(code==='0'){
-              message.success('操作成功');
-            }else{
-              message.error('已是解锁状态');
-            }
-            list(formValues);
-          },
-        });
-      }
-    })
-  };
-
-
   return (
     <PageContainer title={false}>
       <div className={styles.search}>
@@ -180,11 +132,12 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
             initialValues={{
               compCode: '100001',
               acctYear: moment('2019'),
-              menuid: '',
+              itemCode:'',
+              equiCode:'',
+              deptCode:'',
             }}
-            searchKeys={['compCode','acctYear','menuid']}
+            searchKeys={['compCode','acctYear','itemCode','equiCode','deptCode']}
             onSearch={(params:{[key:string]:any}) => list(params)}
-            formValuesChange={(values:{[key:string]:any})=>setFormValues(values)}
           />
         </Card>
       </div>
@@ -195,18 +148,12 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
           size="small"
           title={() => (
             <div className={styles.tableTitle}>
-              <span className={styles.title}>解锁医院数据</span>
+              <span className={styles.title}>资产专属查询</span>
               <div>
-                <Button type="primary" onClick={download}>导出</Button>
-                <Button type="primary" onClick={lock}>锁定</Button>
-                <Button type="primary" onClick={unLock}>解锁</Button>
+                <Button type="primary" onClick={()=>download(dispatch,'assetMaterial/download',formValues)}>导出</Button>
               </div>
             </div>
           )}
-          scroll={{
-            x: 1200,
-            y: height,
-          }}
           columns={columns}
           data={data}
           selectedRows={selectedRows}
@@ -220,17 +167,17 @@ const TableList: React.FC<TableListProps> = ({ dispatch, submitting }) => {
 
 export default connect(
   ({
-    checkIndex20,
+     assetMaterial,
     loading,
   }: {
-    checkIndex20: StateType;
+    assetMaterial: StateType;
     loading: {
       effects: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    checkIndex20,
-    submitting: loading.effects['checkIndex20/list']||loading.effects['checkIndex20/calc']||loading.effects['checkIndex20/download'],
+    assetMaterial,
+    submitting: loading.effects['assetMaterial/list']||loading.effects['assetMaterial/download'],
   }),
 )(TableList);

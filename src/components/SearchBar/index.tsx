@@ -291,6 +291,17 @@ const SearchBar:React.FC<SearchBarProps>=({formValuesChange,onSave,calc,initialV
             </Form.Item>
           ) : null
         }
+        {
+          searchKeys.includes('equiCode') ? (
+            <Form.Item label="资产名称" name="equiCode">
+              <Select style={{ width: 120 }} showSearch filterOption={(inputValue, option)=>option.children.indexOf(inputValue)>=0}>
+                <Select.Option value='0'>全部</Select.Option>
+              </Select>
+            </Form.Item>
+          ) : null
+        }
+
+
 
         <Form.Item>
           <div className={styles.btns}>

@@ -65,4 +65,5 @@ export interface TableListParams {
   riskRatio?:string;
   dataId?:string;
   mateInvCode?:string;
+  equiCode?:string;
 }
